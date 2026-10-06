@@ -1,7 +1,19 @@
 import type { ExtensionAPI, ThinkingLevel } from "@earendil-works/pi-coding-agent";
 
-/** Model-aware alias for Pi's /thinking command. */
+/**
+ * pi-agy-compat extension:
+ * Consolidates clear, effort, exit, and rename slash commands into a single extension.
+ */
 export default function (pi: ExtensionAPI) {
+  // 1. /clear - Alias for /new (start a fresh session)
+  pi.registerCommand("clear", {
+    description: "Alias for /new (start a fresh session)",
+    handler: async (_args, ctx) => {
+      await ctx.newSession();
+    },
+  });
+
+  // 2. /effort - Model-aware alias for Pi's /thinking command
   pi.registerCommand("effort", {
     description: "Alias for /thinking (set the model's thinking level)",
     handler: async (args, ctx) => {
@@ -42,6 +54,26 @@ export default function (pi: ExtensionAPI) {
       if (level) {
         pi.setThinkingLevel(level);
       }
+    },
+  });
+
+  // 3. /exit - Exit Pi
+  pi.registerCommand("exit", {
+    description: "Exit Pi",
+    handler: async (_args, ctx) => {
+      ctx.shutdown();
+    },
+  });
+
+  // 4. /rename - Rename the current session, or prompt for a name when none is provided
+  pi.registerCommand("rename", {
+    description: "Rename the current session (alias for /name)",
+    handler: async (args, ctx) => {
+      const requestedName = args.trim() || (await ctx.ui.input("Rename session", "Enter a session name"))?.trim();
+      if (!requestedName) return;
+
+      pi.setSessionName(requestedName);
+      ctx.ui.notify(`Session name set: ${requestedName}`, "info");
     },
   });
 }
