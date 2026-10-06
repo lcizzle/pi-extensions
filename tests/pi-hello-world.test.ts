@@ -81,6 +81,7 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
         "-p",
         "exit",
       ], {
+        stdin: "ignore",
         env: {
           ...process.env,
           PI_CODING_AGENT_DIR: tmpDir,
