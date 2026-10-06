@@ -1,0 +1,21 @@
+{
+  "name": "pi-agy-acp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Antigravity ACP extension and native pi-subagents transport wrappers",
+  "keywords": ["pi-package"],
+  "pi": {
+    "extensions": ["./pi-agy-acp.ts", "./acp-external-jobs.ts"]
+  },
+  "pi-subagents": {
+    "agents": ["./agents"]
+  },
+  "dependencies": {
+    "pi-subagents": "0.75.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  }
+}
