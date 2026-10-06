@@ -74,6 +74,7 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
 
       const res = Bun.spawnSync([
         "pi",
+        "--offline",
         "-e",
         "./extensions/pi-hello-world/pi-hello-world.ts",
         "--no-session",
@@ -83,6 +84,7 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
         env: {
           ...process.env,
           PI_CODING_AGENT_DIR: tmpDir,
+          PI_OFFLINE: "1",
         },
       });
 
@@ -91,5 +93,5 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
       server.stop();
       rmSync(tmpDir, { recursive: true, force: true });
     }
-  }, 30000);
+  }, 60000);
 });
