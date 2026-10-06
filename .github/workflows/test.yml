@@ -20,7 +20,12 @@ jobs:
         run: bun install
 
       - name: Install Pi CLI
-        run: npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+        run: |
+          npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+          echo "$(npm config get prefix)/bin" >> $GITHUB_PATH
+
+      - name: Check Pi CLI version
+        run: pi --version
 
       - name: Run tests
         run: bun test
