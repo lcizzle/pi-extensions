@@ -145,6 +145,7 @@ describe("pi-agy-compat extension headless CLI smoke test", () => {
       const result = Bun.spawnSync(
         [
           "pi",
+          "--offline",
           "-e",
           "./extensions/pi-agy-compat/pi-agy-compat.ts",
           "--no-session",
@@ -157,6 +158,7 @@ describe("pi-agy-compat extension headless CLI smoke test", () => {
           env: {
             ...process.env,
             CI: "true",
+            PI_OFFLINE: "1",
             PI_CODING_AGENT_DIR: tmpDir,
           },
         }
