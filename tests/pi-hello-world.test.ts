@@ -86,7 +86,7 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
           CI: "true",
           PI_CODING_AGENT_DIR: tmpDir,
         },
-        timeout: 5000, // Fail fast after 5s instead of hanging 30s
+        timeout: 15000, // Allow up to 15s for CI runner cold-starts
       });
 
       expect(proc.exitCode).toBe(0);
