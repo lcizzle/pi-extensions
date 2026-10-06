@@ -32,7 +32,7 @@ describe("pi-hello-world extension unit tests", () => {
 });
 
 describe("pi-hello-world extension headless CLI smoke test", () => {
-  test("loads cleanly in pi CLI without error", () => {
+  test("loads cleanly in pi CLI without error", async () => {
     const tmpDir = join(tmpdir(), `pi-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
     mkdirSync(tmpDir, { recursive: true });
 
@@ -72,7 +72,7 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
         })
       );
 
-      const res = Bun.spawnSync([
+      const proc = Bun.spawn([
         "pi",
         "-e",
         "./extensions/pi-hello-world/pi-hello-world.ts",
@@ -80,16 +80,19 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
         "-p",
         "exit",
       ], {
+        stdin: "ignore", // Critical: prevents process from waiting on stdin
         env: {
           ...process.env,
+          CI: "true",
           PI_CODING_AGENT_DIR: tmpDir,
         },
       });
 
-      expect(res.exitCode).toBe(0);
+      const exitCode = await proc.exited;
+      expect(exitCode).toBe(0);
     } finally {
       server.stop();
       rmSync(tmpDir, { recursive: true, force: true });
     }
-  });
+  }, 30000);
 });
