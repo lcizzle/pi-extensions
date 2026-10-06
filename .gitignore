@@ -1,6 +1,11 @@
 # Agents
+.agents/
 .pi/
+.mcp.json
 AGENTS.md
 
 # Visual Studio Code
 .vscode/
+
+# Node
+node_modules/
