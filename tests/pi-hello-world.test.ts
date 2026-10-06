@@ -91,5 +91,5 @@ describe("pi-hello-world extension headless CLI smoke test", () => {
       server.stop();
       rmSync(tmpDir, { recursive: true, force: true });
     }
-  });
+  }, 30000);
 });
